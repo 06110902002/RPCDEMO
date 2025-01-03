@@ -1,0 +1,228 @@
+## This file contains all the build statements describing the
+# compilation DAG.
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# 
+# Which is the root file.
+# =============================================================================
+
+# =============================================================================
+# Project: RPCServer
+# Configurations: Debug
+# =============================================================================
+
+#############################################
+# Minimal version of Ninja required by this file
+
+ninja_required_version = 1.5
+
+
+#############################################
+# Set configuration variable for custom commands.
+
+CONFIGURATION = Debug
+# =============================================================================
+# Include auxiliary files.
+
+
+#############################################
+# Include rules file.
+
+include CMakeFiles/rules.ninja
+
+# =============================================================================
+
+#############################################
+# Logical path to working directory; prefix for absolute paths.
+
+cmake_ninja_workdir = /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/cmake-build-debug/
+# =============================================================================
+# Object build statements for EXECUTABLE target RPCClient
+
+
+#############################################
+# Order-only phony target for RPCClient
+
+build cmake_object_order_depends_target_RPCClient: phony || CMakeFiles/RPCClient.dir
+
+build CMakeFiles/RPCClient.dir/client/main.cpp.o: CXX_COMPILER__RPCClient_Debug /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/client/main.cpp || cmake_object_order_depends_target_RPCClient
+  DEP_FILE = CMakeFiles/RPCClient.dir/client/main.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./net/*.h" -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./server/*.h" -I/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/meta.h
+  OBJECT_DIR = CMakeFiles/RPCClient.dir
+  OBJECT_FILE_DIR = CMakeFiles/RPCClient.dir/client
+
+build CMakeFiles/RPCClient.dir/client/TaskMgr.cpp.o: CXX_COMPILER__RPCClient_Debug /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/client/TaskMgr.cpp || cmake_object_order_depends_target_RPCClient
+  DEP_FILE = CMakeFiles/RPCClient.dir/client/TaskMgr.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./net/*.h" -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./server/*.h" -I/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/meta.h
+  OBJECT_DIR = CMakeFiles/RPCClient.dir
+  OBJECT_FILE_DIR = CMakeFiles/RPCClient.dir/client
+
+build CMakeFiles/RPCClient.dir/bus/ByteUtils.cpp.o: CXX_COMPILER__RPCClient_Debug /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/bus/ByteUtils.cpp || cmake_object_order_depends_target_RPCClient
+  DEP_FILE = CMakeFiles/RPCClient.dir/bus/ByteUtils.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./net/*.h" -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./server/*.h" -I/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/meta.h
+  OBJECT_DIR = CMakeFiles/RPCClient.dir
+  OBJECT_FILE_DIR = CMakeFiles/RPCClient.dir/bus
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target RPCClient
+
+
+#############################################
+# Link the executable RPCClient
+
+build RPCClient: CXX_EXECUTABLE_LINKER__RPCClient_Debug CMakeFiles/RPCClient.dir/client/main.cpp.o CMakeFiles/RPCClient.dir/client/TaskMgr.cpp.o CMakeFiles/RPCClient.dir/bus/ByteUtils.cpp.o
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
+  OBJECT_DIR = CMakeFiles/RPCClient.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = RPCClient
+  TARGET_PDB = RPCClient.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target RPCServer
+
+
+#############################################
+# Order-only phony target for RPCServer
+
+build cmake_object_order_depends_target_RPCServer: phony || CMakeFiles/RPCServer.dir
+
+build CMakeFiles/RPCServer.dir/server/main.cpp.o: CXX_COMPILER__RPCServer_Debug /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/server/main.cpp || cmake_object_order_depends_target_RPCServer
+  DEP_FILE = CMakeFiles/RPCServer.dir/server/main.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./net/*.h" -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./server/*.h" -I/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/meta.h
+  OBJECT_DIR = CMakeFiles/RPCServer.dir
+  OBJECT_FILE_DIR = CMakeFiles/RPCServer.dir/server
+
+build CMakeFiles/RPCServer.dir/server/Thread.cpp.o: CXX_COMPILER__RPCServer_Debug /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/server/Thread.cpp || cmake_object_order_depends_target_RPCServer
+  DEP_FILE = CMakeFiles/RPCServer.dir/server/Thread.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./net/*.h" -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./server/*.h" -I/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/meta.h
+  OBJECT_DIR = CMakeFiles/RPCServer.dir
+  OBJECT_FILE_DIR = CMakeFiles/RPCServer.dir/server
+
+build CMakeFiles/RPCServer.dir/net/Socket.cpp.o: CXX_COMPILER__RPCServer_Debug /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/net/Socket.cpp || cmake_object_order_depends_target_RPCServer
+  DEP_FILE = CMakeFiles/RPCServer.dir/net/Socket.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./net/*.h" -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./server/*.h" -I/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/meta.h
+  OBJECT_DIR = CMakeFiles/RPCServer.dir
+  OBJECT_FILE_DIR = CMakeFiles/RPCServer.dir/net
+
+build CMakeFiles/RPCServer.dir/net/OsHandle.cpp.o: CXX_COMPILER__RPCServer_Debug /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/net/OsHandle.cpp || cmake_object_order_depends_target_RPCServer
+  DEP_FILE = CMakeFiles/RPCServer.dir/net/OsHandle.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./net/*.h" -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./server/*.h" -I/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/meta.h
+  OBJECT_DIR = CMakeFiles/RPCServer.dir
+  OBJECT_FILE_DIR = CMakeFiles/RPCServer.dir/net
+
+build CMakeFiles/RPCServer.dir/net/Address.cpp.o: CXX_COMPILER__RPCServer_Debug /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/net/Address.cpp || cmake_object_order_depends_target_RPCServer
+  DEP_FILE = CMakeFiles/RPCServer.dir/net/Address.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./net/*.h" -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./server/*.h" -I/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/meta.h
+  OBJECT_DIR = CMakeFiles/RPCServer.dir
+  OBJECT_FILE_DIR = CMakeFiles/RPCServer.dir/net
+
+build CMakeFiles/RPCServer.dir/net/NetServer.cpp.o: CXX_COMPILER__RPCServer_Debug /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/net/NetServer.cpp || cmake_object_order_depends_target_RPCServer
+  DEP_FILE = CMakeFiles/RPCServer.dir/net/NetServer.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./net/*.h" -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./server/*.h" -I/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/meta.h
+  OBJECT_DIR = CMakeFiles/RPCServer.dir
+  OBJECT_FILE_DIR = CMakeFiles/RPCServer.dir/net
+
+build CMakeFiles/RPCServer.dir/net/Dispatcher.cpp.o: CXX_COMPILER__RPCServer_Debug /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/net/Dispatcher.cpp || cmake_object_order_depends_target_RPCServer
+  DEP_FILE = CMakeFiles/RPCServer.dir/net/Dispatcher.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./net/*.h" -I"/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/./server/*.h" -I/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/meta.h
+  OBJECT_DIR = CMakeFiles/RPCServer.dir
+  OBJECT_FILE_DIR = CMakeFiles/RPCServer.dir/net
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target RPCServer
+
+
+#############################################
+# Link the executable RPCServer
+
+build RPCServer: CXX_EXECUTABLE_LINKER__RPCServer_Debug CMakeFiles/RPCServer.dir/server/main.cpp.o CMakeFiles/RPCServer.dir/server/Thread.cpp.o CMakeFiles/RPCServer.dir/net/Socket.cpp.o CMakeFiles/RPCServer.dir/net/OsHandle.cpp.o CMakeFiles/RPCServer.dir/net/Address.cpp.o CMakeFiles/RPCServer.dir/net/NetServer.cpp.o CMakeFiles/RPCServer.dir/net/Dispatcher.cpp.o
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
+  OBJECT_DIR = CMakeFiles/RPCServer.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = RPCServer
+  TARGET_PDB = RPCServer.dbg
+
+
+#############################################
+# Utility command for edit_cache
+
+build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build edit_cache: phony CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer -B/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/cmake-build-debug
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build rebuild_cache: phony CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Target aliases.
+
+# =============================================================================
+# Folder targets.
+
+# =============================================================================
+
+#############################################
+# Folder: /Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/cmake-build-debug
+
+build all: phony RPCClient RPCServer
+
+# =============================================================================
+# Built-in targets
+
+
+#############################################
+# Re-run CMake if any of its inputs changed.
+
+build build.ninja: RERUN_CMAKE | ../CMakeLists.txt /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeCInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeCXXInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeCommonLanguageInclude.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeGenericSystem.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeInitializeConfigs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeLanguageInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeSystemSpecificInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeSystemSpecificInitialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/GNU.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Darwin-Initialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Darwin.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.23.2/CMakeCCompiler.cmake CMakeFiles/3.23.2/CMakeCXXCompiler.cmake CMakeFiles/3.23.2/CMakeSystem.cmake
+  pool = console
+
+
+#############################################
+# A missing CMake input file is not an error.
+
+build ../CMakeLists.txt /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeCInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeCXXInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeCommonLanguageInclude.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeGenericSystem.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeInitializeConfigs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeLanguageInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeSystemSpecificInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/CMakeSystemSpecificInitialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Compiler/GNU.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Apple-Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Darwin-Initialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/Darwin.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.23/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.23.2/CMakeCCompiler.cmake CMakeFiles/3.23.2/CMakeCXXCompiler.cmake CMakeFiles/3.23.2/CMakeSystem.cmake: phony
+
+
+#############################################
+# Clean all the built files.
+
+build clean: CLEAN
+
+
+#############################################
+# Print all primary targets available.
+
+build help: HELP
+
+
+#############################################
+# Make the all target the default.
+
+default all

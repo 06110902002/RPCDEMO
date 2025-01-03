@@ -1,0 +1,69 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.23"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "RPCServer",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "RPCClient::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-RPCClient-Debug-14f5e4c708383880780d.json",
+					"name" : "RPCClient",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "RPCServer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-RPCServer-Debug-a13c56d1a6d052e28ad2.json",
+					"name" : "RPCServer",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer/cmake-build-debug",
+		"source" : "/Users/rambo.liu/Documents/Demo/CPP_DEMO/RPCServer"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

@@ -1,0 +1,21 @@
+# ninja log v5
+2	951	1735872498611259026	CMakeFiles/RPCClient.dir/client/main.cpp.o	ddf5cc2a24411612
+10	3177	1735812764005973133	CMakeFiles/RPCServer.dir/net/OsHandle.cpp.o	13364cb0218645d4
+9	3035	1735812763854808299	CMakeFiles/RPCServer.dir/server/Thread.cpp.o	f9d3f98c30a63eb1
+3038	5520	1735812766341861965	CMakeFiles/RPCServer.dir/net/Dispatcher.cpp.o	e5c04dcfdddfefba
+3	697	1735813738949439944	CMakeFiles/RPCClient.dir/client/TaskMgr.cpp.o	5bc26d946ac0e449
+11	3223	1735812764057630811	CMakeFiles/RPCServer.dir/net/Address.cpp.o	37a9f53924da4789
+953	1061	1735872498732779376	RPCClient	b3191114b67197bc
+8	3439	1735812764239838510	CMakeFiles/RPCServer.dir/server/main.cpp.o	dd8547b5daebc7fe
+10	3210	1735812764035410359	CMakeFiles/RPCServer.dir/net/Socket.cpp.o	7af7c4859839beb8
+0	328	1735873048890381309	build.ninja	d8509cbd7584316d
+0	20	0	clean	3c8e6cc385ee00ba
+17	3282	1735812764115277918	CMakeFiles/RPCServer.dir/net/NetServer.cpp.o	3f6d6dae8f9c95c4
+4	1207	1735037269294365070	CMakeFiles/RPCServer.dir/main.cpp.o	2c28ae2f0d6963fd
+5520	5973	1735812766815755693	RPCServer	e44f0e5b4771dabe
+2	47	1734594936301146679	CMakeFiles/RPCServer.dir/server/Task.cpp.o	4def38d146273c35
+0	1077	1735037399755828115	CMakeFiles/RPCClient.dir/main.cpp.o	e76ded5b7904276
+4	975	1735037437515390695	CMakeFiles/RPCServer.dir/client/main.cpp.o	d467296e8bd44e7e
+3	115	1735873341320546025	CMakeFiles/RPCClient.dir/bus/ByteUtils.cpp.o	ee9069aa674b0034
+2	1006	1735873342199299511	CMakeFiles/RPCClient.dir/client/main.cpp.o	ddf5cc2a24411612
+1006	1106	1735873342317412471	RPCClient	ef93460e2e0e5550

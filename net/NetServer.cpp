@@ -31,6 +31,8 @@ bool NetServer::listenAndAccept(const std::string &ip, uint16_t port) {
     _dispatcher->listenAndAccept();
 //    _dispatcher->recv();
     _dispatcher->start();
+    char* msg = "server echo msg";
+    //_dispatcher->write(32, strlen(msg),msg);
 
 
 }

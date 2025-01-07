@@ -8,6 +8,7 @@
 #include <iostream>
 #include <future>
 #include "Request.h"
+#include "SocketClient.h"
 
 const constexpr size_t DEFAULT_TIMEOUT = 5000; // milliseconds
 
@@ -42,11 +43,24 @@ const constexpr auto FUTURE = CallModel::future;
 class RPCClient : public std::enable_shared_from_this<RPCClient> {
 public:
     RPCClient() {
-
+        _socketClient = std::make_shared<SocketClient>();
     }
 
     ~RPCClient() {
+        stop();
         printf("RPCClient 被析构\n");
+    }
+
+    void start(std::string &ip, const int port) {
+        if (_socketClient) {
+            _socketClient->start(ip,port);
+        }
+    }
+
+    void stop() {
+        if (_socketClient) {
+            _socketClient->stop();
+        }
     }
 
     /**
@@ -126,15 +140,16 @@ public:
      */
     template<CallModel model, typename... Args>
     future_result<std::string> sync_call(const std::string &rpc_name, Args &&...args) {
-        uint64_t fu_id = 0;
         std::packaged_task<std::string()> task([&]() {
             Request<Args...> request;
-            std::string result = request.convert2JSONStr(rpc_name,std::forward<Args>(args)...);
-            std::this_thread::sleep_for(std::chrono::seconds(3));
+            std::string req = request.convert2JSONStr(rpc_name,std::forward<Args>(args)...);
+            std::string result = _socketClient->sendMessage(req);
             return result;
         });
         std::future<std::string> f1 = task.get_future();
-        std::thread(std::move(task)).detach();
+        std::thread t(std::move(task));
+        t.detach();
+        //t.join();
         return future_result<std::string>{std::move(f1)};
     }
 
@@ -154,6 +169,14 @@ public:
         task_td.join();
 
     }
+
+    void connectThreadJoin() {
+        if (_socketClient) {
+            _socketClient->connectThreadJoin();
+        }
+    }
+private:
+    std::shared_ptr<SocketClient> _socketClient;
 
 };
 

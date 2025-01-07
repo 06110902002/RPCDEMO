@@ -13,6 +13,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <memory>
+#include <unordered_map>
 #include "../bus/ByteUtils.h"
 
 class SocketClient : public std::enable_shared_from_this<SocketClient> {
@@ -20,14 +22,16 @@ class SocketClient : public std::enable_shared_from_this<SocketClient> {
 public:
 
     SocketClient() {
-        _taskMgr = new TaskMgr();
+        _stop = false;
+        _req_num = 0;
+        _isConnected = false;
+        _taskMgr = std::make_shared<TaskMgr>();
     }
 
     ~SocketClient() {
-        if (_taskMgr) {
-            delete _taskMgr;
-            _taskMgr = nullptr;
-        }
+        _stop = true;
+        _isConnected = true;
+        printf("31-------- ~SocketClient 被析构\n");
     }
 
 
@@ -93,9 +97,43 @@ public:
         return true;
     }
 
+    bool read() {
+        while(!_stop) {
+            uint8_t *type = ByteUtils::readLengthForClient(4, _socket_id);
+            if (!type) {
+                free(type);
+                continue;
+            }
+
+            int nType = ByteUtils::byte2Int(type);
+
+            //读取4 字节的长度
+            uint8_t *length = ByteUtils::readLengthForClient(4, _socket_id);
+            if (!length) {
+                free(length);
+                break;
+            }
+
+            int nlength = ByteUtils::byte2Int(length);
+
+            uint8_t *content = ByteUtils::readLengthForClient(nlength, _socket_id);
+            printf("收到信息内容：type = %d length = %d  content = %s \n", nType, nlength, content);
+
+            std::string result(content,content + nlength);
+            auto &f = _future_map[nType];
+            if (f) {
+                f->set_value(result);
+            }
+            //_result_promise.set_value(result);
+        }
+        return false;
+    }
 
 
     bool sendMsg(int pro_type,const char* msg,size_t length) {
+        if (pro_type <= 0 || !msg || length <= 0) {
+            return false;
+        }
         //发送4 字节 的报文类型
         uint8_t *type = ByteUtils::int2Bytes(pro_type);
         send(_socket_id, type, 4, 0);
@@ -106,6 +144,21 @@ public:
 
         //发送报文数据
         send(_socket_id, msg,length, 0);
+
+        return true;
+    }
+
+    std::string sendMessage(std::string &msg) {
+        CGRAPH_UNIQUE_LOCK lk(_conn_mtx);
+        _conn_cond.wait(lk, [this] { return _isConnected; });
+        auto p = std::make_shared<std::promise<std::string>>();
+        std::future<std::string> result_future = p->get_future();//_result_promise.get_future();
+        _req_num ++;
+        _future_map.emplace(_req_num, std::move(p));
+        sendMsg(_req_num, msg.c_str(), msg.length());
+        std::string re = result_future.get();
+        return re;
+
     }
 
 
@@ -113,32 +166,39 @@ public:
     void start(std::string &ip, const int port) {
         std::packaged_task<bool()> task([this, ip, port]() {
             std::future<bool> connectFuture = commit(std::bind(&SocketClient::connectServer, this, ip, port));
-//            if (connectFuture.get()) {
-//                const char* msg = "this is test msg 23";
-//                size_t length = strlen(msg) + 1;
-//                commit(std::bind(&SocketClient::sendMsg, this,1,msg,length));
-//            }
-            const char* msg = "this is test msg 23";
-            size_t length = strlen(msg) + 1;
-            commit(std::bind(&SocketClient::sendMsg, this,1,msg,length));
-            return connectFuture.get();
+            _isConnected = connectFuture.get();
+            if (_isConnected) {
+                _conn_cond.notify_one();
+                read();
+            }
+            return _isConnected;
         });
-        std::future<bool> f1 = task.get_future();
-        std::thread t(std::move(task));
-        t.join();
-        printf("99---------connected  = %d   t 线程执行完毕\n ", f1.get());
-        _taskMgr->join();
+        _connect_thread = std::make_unique<std::thread>(std::move(task));
 
     }
 
-    void stop() {
+    void connectThreadJoin() {
+        if (_connect_thread && _connect_thread->joinable()) {
+            _connect_thread->join();
+        }
+    }
 
+    void stop() {
+        _stop = true;
     }
 
 
 private:
-    TaskMgr *_taskMgr;
+    std::shared_ptr<TaskMgr>_taskMgr;
     int _socket_id;
+    bool _stop;
+    bool _isConnected;
+    std::promise<std::string> _result_promise;
+    int _req_num;
+    std::mutex _conn_mtx;
+    std::condition_variable _conn_cond;
+    std::unique_ptr<std::thread>  _connect_thread;
+    std::unordered_map<int, std::shared_ptr<std::promise<std::string>>> _future_map;
 };
 
 #endif //RPCSERVER_SOCKETCLIENT_H

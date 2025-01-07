@@ -69,7 +69,16 @@ private:
     std::string info_ = "MyFunction : ";
 };
 
-
+void testRTCClient() {
+    std::string ip2 = "127.0.0.1";
+    int port2 = 12581;
+    std::shared_ptr<RPCClient> rpcClient = std::make_shared<RPCClient>();
+    rpcClient->start(ip2,port2);
+    std::string re = rpcClient->call<std::string>("add",1,2);
+    std::string re2 = rpcClient->call<std::string>("test",122,2);
+    printf("85----------收到 re = %s  re2 = %s\n",re.c_str(),re2.c_str());
+    rpcClient->connectThreadJoin();
+}
 
 
 
@@ -77,17 +86,37 @@ private:
 int main() {
 //    testCV();
 //    return 0;
+
+    testRTCClient();
+    return 0;
+
+
+    //测试socket client
     SocketClient* socketClient = new SocketClient();
     MyFunction mf;
     std::string str = "5";
     auto r3 = socketClient->commit(std::bind(&MyFunction::concat, mf, str));    // 返回值可以是任意类型
     printf("76--------str = %s \n",r3.get().c_str());
 
+    std::packaged_task<float()> sendTask([socketClient](){
+        printf("87---------sendmessage \n");
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+        std::string test = "this is test message";
+        std::string result = socketClient->sendMessage(test);
+        printf("91-------------收到 result = %s\n",result.c_str());
+        return 2.0f;
+    }); // 包装函数
+    std::future<float> send = sendTask.get_future();  // 获取 future
+    std::thread t222(std::move(sendTask)); // 在线程上运行
+
+
     std::string ip = "127.0.0.1";
     int port = 12581;
     socketClient->start(ip,port);
     return 0;
 
+
+    //测试TaskMgr
     TaskMgr* taskMgr = new TaskMgr();
     //taskMgr->pushTask(std::bind(&MyFunction::concat, mf, str));
 

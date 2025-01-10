@@ -6,7 +6,7 @@
 #define RPCSERVER_ATOMICQUEUE_H
 
 #include "Object.h"
-#include "ObjectUtils.h"
+#include "../bus/ObjectUtils.h"
 #include "StdExd.h"
 #include <mutex>
 #include <queue>

@@ -164,16 +164,16 @@ public:
 
 
     void start(std::string &ip, const int port) {
-        std::packaged_task<bool()> task([this, ip, port]() {
-            std::future<bool> connectFuture = commit(std::bind(&SocketClient::connectServer, this, ip, port));
-            _isConnected = connectFuture.get();
-            if (_isConnected) {
-                _conn_cond.notify_one();
+        std::future<bool> connectFuture = commit(std::bind(&SocketClient::connectServer, this, ip, port));
+        _isConnected = connectFuture.get();
+        if (_isConnected) {
+            _conn_cond.notify_one();
+            std::packaged_task<bool()> task([this, ip, port]() {
                 read();
-            }
-            return _isConnected;
-        });
-        _connect_thread = std::make_unique<std::thread>(std::move(task));
+                return _isConnected;
+            });
+            _connect_thread = std::make_unique<std::thread>(std::move(task));
+        }
 
     }
 

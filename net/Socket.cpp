@@ -111,8 +111,8 @@ bool Socket::recv(const std::string &ip, uint16_t port) {
             _read_cb(_socketId,nType, nlength, content);
         }
         printf("收到信息内容：type = %d length = %d  content = %s \n", nType, nlength, content);
-        char* msg = "server echo msg";
-        write(nType, strlen(msg),msg);
+        //char* msg = "server echo msg";
+        //write(nType, strlen(msg),msg);
     }
     return false;
 }

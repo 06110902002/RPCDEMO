@@ -6,6 +6,7 @@ include_directories(
         "./net/*.h"
         "./server/*.h"
         "meta.h"
+        bus/jsonxx.h
 )
 
 #客户端入口
@@ -17,11 +18,16 @@ add_executable(RPCClient
         client/SocketClient.h
         client/Object.h
         client/AtomicQueue.h
-        client/ObjectUtils.h
+        bus/ObjectUtils.h
         client/StdExd.h
         client/TaskPack.h
         client/TaskMgr.cpp
-        client/TaskMgr.h bus/ByteUtils.cpp bus/ByteUtils.h)
+        client/TaskMgr.h
+        bus/ByteUtils.cpp
+        bus/ByteUtils.h
+        bus/UnPack.h
+        bus/jsonxx.cpp
+        )
 
 #服务端
 add_executable(
@@ -49,4 +55,7 @@ add_executable(
 #        net/NetServer.h
 #        net/Dispatcher.h
 #        net/Response.h
-        server/Register.h)
+        server/Register.h
+        bus/UnPack.h
+        bus/jsonxx.cpp
+)

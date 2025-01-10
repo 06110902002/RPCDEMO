@@ -9,6 +9,7 @@
 #include "AsyncTask.h"
 #include "../meta.h"
 #include "../net/NetServer.h"
+#include "Register.h"
 
 // 使用第三方库实现序列化和反序列化
 //#include <boost/serialization/serialization.hpp>
@@ -52,10 +53,10 @@ private:
     std::mutex mtx_;
 };
 
-int add (char* ip,int port) {
+int add (long double a,long double b) {
 
-    printf("52-----ip = %s  port = %d \n",ip,port);
-    return 23;
+    printf("52-----ip = %Lf  port = %Lf \n",a,b);
+    return a + b;
 }
 
 void add2 (int a,int b,int c) {
@@ -157,16 +158,31 @@ public:
 
 
 
+std::shared_ptr<NetServer> netServer;
+Register* reg;
+
 void connectedCallBack(int clientId, NET_ERROR_CODE status,const char *msg) {
     printf("126-----clientId = %d  status = %d  msg = %s\n",clientId,status,msg);
 }
 
 void readDataCallBack(int clientId,int type, int len,uint8_t* data) {
     printf("165---收到信息 type = %d len = %d  data = %s \n",type,len,data);
+
+    if (reg && netServer) {
+        jsonxx::Object o;
+        std::string info(data,data + len);
+        o.parse(info);
+        std::string method = o.get<jsonxx::String>("method");
+        reg->exe(method,type,netServer,info);
+    }
 }
 
 void testNetServer() {
-    std::shared_ptr<NetServer> netServer = std::make_shared<NetServer>();
+    reg = new Register();
+    std::string method = "add";
+    reg->register_nonmember_func(method,add);
+
+    netServer = std::make_shared<NetServer>();
     string ip = "172.20.1.298";
     netServer->setAcceptCallback(std::move(connectedCallBack));
     netServer->setReadCallback(std::move(readDataCallBack));

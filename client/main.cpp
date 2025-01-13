@@ -75,8 +75,11 @@ void testRTCClient() {
     std::shared_ptr<RPCClient> rpcClient = std::make_shared<RPCClient>();
     rpcClient->start(ip2,port2);
     std::string re = rpcClient->call<std::string>("add",1,2);
-//    std::string re2 = rpcClient->call<std::string>("test",122,2);
-//    printf("85----------收到 re = %s  re2 = %s\n",re.c_str(),re2.c_str());
+    std::string name = "name";
+    std::string re2 = rpcClient->call<std::string>("getPersonInfo",23,name);
+
+    std::string re3 = rpcClient->call<std::string>("mem_add",12,22);
+    //printf("85----------收到 re = %s  re2 = %s\n",re.c_str(),re2.c_str());
     rpcClient->connectThreadJoin();
 }
 

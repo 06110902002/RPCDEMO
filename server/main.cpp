@@ -64,6 +64,12 @@ void add2 (int a,int b,int c) {
     printf("57-----a = %d  b = %d  c = %d \n",a,b,c);
 }
 
+std::string getPersonInfo(long double age,const std::string& name) {
+    printf("68----收到个人信息年龄 = %Lf  名称 = %s\n",age,name.c_str());
+    std::string name2("echo name to client");
+    return name2;
+}
+
 
 
 /**--------------------------遍历tuple 并将tuple 当作函数参数列表执行-----------------------------***/
@@ -152,6 +158,11 @@ public:
     void test2(int ip,int port) {
         printf("121---------- ip = %d  port = %d \n",ip,port);
     }
+    int mem_add (long double a,long double b) {
+
+        printf("163-----ip = %Lf  port = %Lf \n",a,b);
+        return a + b;
+    }
 
 };
 
@@ -178,9 +189,21 @@ void readDataCallBack(int clientId,int type, int len,uint8_t* data) {
 }
 
 void testNetServer() {
+
+    D* d = new D();
+    std::tuple<int,int> args_tt = std::make_tuple(2,5);
+    call_member_func(d,&D::test2,args_tt);
+
+
     reg = new Register();
     std::string method = "add";
     reg->register_nonmember_func(method,add);
+
+    std::string getPersonInfo_fun = "getPersonInfo";
+    reg->register_nonmember_func(getPersonInfo_fun, getPersonInfo);
+
+    std::string mem_add = "mem_add";
+    reg->register_member_func(mem_add,d,&D::mem_add);
 
     netServer = std::make_shared<NetServer>();
     string ip = "172.20.1.298";

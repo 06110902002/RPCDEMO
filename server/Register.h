@@ -40,7 +40,11 @@ public:
     }
 
     ~Register() {
-
+        if (_send_buff) {
+            delete _send_buff;
+            _send_buff = nullptr;
+        }
+        printf("47----- ~Register() 被析构\n");
     }
 
     template<typename Function>
@@ -53,16 +57,55 @@ public:
                 auto re = callMethod(f,std::move(args_tuple));
                 //执行完毕之后 需要将结果沿对应的socket 返回
                 if (!netServer.expired()) {
-                    if(isString(re)) {
-                        //netServer.lock()->write(proId,re.length(),re.c_str());
-                    } else {
-                        std::string msg = type2str(re);
-                        printf("60--------msg = %s\n",msg.c_str());
-                        netServer.lock()->write(proId,msg.length(),msg.c_str());
-                    }
+//                    if (isString(std::move(re))) {
+//                        std::strstream ss;
+//                        ss << re;
+//                        netServer.lock()->write(proId, strlen(ss.str()),ss.str());
+//                        printf("62-------string\n");
+//                    } else {
+//                        std::string msg = type2str(re);
+//                        if (!_send_buff) {
+//                            _send_buff = static_cast<char *>(malloc(msg.length()));
+//                        }
+//                        memset(_send_buff,0,msg.length());
+//                        memcpy(_send_buff,msg.c_str(),msg.length());
+//                        netServer.lock()->write(proId,msg.length(),_send_buff);
+//                    }
+
+                    std::strstream ss;
+                    ss << re;
+                    netServer.lock()->write(proId, strlen(ss.str()),ss.str());
                 }
 
                 printf("50--------re = %d\n",isString(re));
+            } catch (const char* msg) {
+                printf("转换异常，请检查解包过程  error = %s\n",msg);
+            }
+        };
+    }
+
+    /**
+     * 注册成员函数
+     * @tparam Function 成员函数 类型
+     * @tparam Self     成员函数的实例对象 类型
+     * @param funName   函数名称
+     * @param f         成员函数
+     * @param self      类实例
+     */
+    template <typename Function, typename Self>
+    void register_member_func(std::string const& funName,  Self *self,const Function &f) {
+        this->_func_map[funName] = [f,self,this](int proId,const std::weak_ptr<NetServer>& netServer,std::string str)  {
+            using args_tuple_type = typename function_traits<Function>::bare_tuple_type; //获取 去除const属性 参数 类型元组
+            try {
+                args_tuple_type args_tuple = _unpack.get()->unpack<args_tuple_type>(str,str.length());
+                auto re = call_member_func(self,f,std::move(args_tuple));
+                if (!netServer.expired()) {
+                    std::strstream ss;
+                    ss << re;
+                    netServer.lock()->write(proId, strlen(ss.str()),ss.str());
+                }
+
+                printf("110--------re = %d\n",isString(re));
             } catch (const char* msg) {
                 printf("转换异常，请检查解包过程  error = %s\n",msg);
             }
@@ -98,7 +141,7 @@ public:
      * @return
      */
     template<>
-    bool isString(const std::string& param) {
+    bool isString(std::string&& param) {
         return true;
     }
 
@@ -136,6 +179,7 @@ protected:
 
 private:
     std::shared_ptr<UnPack> _unpack;
+    char* _send_buff;
 };
 
 

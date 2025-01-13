@@ -138,7 +138,21 @@ static auto call_member_helper(const F &f, Self *self,
     return (*self.*f)(std::move(std::get<Indexes>(tup))...);
 }
 
+template<typename Self, typename Function,typename Tuple, std::size_t... Index>
+decltype(auto) invoke_member_impl(Self *self,Function &&func,Tuple &&t, std::index_sequence<Index...>) {
+    return (*self.*func)(std::move(std::get<Index>(t))...);
+}
 
+template<typename F, typename Self, typename Tuple>
+static auto call_member_func(Self *self, F &&f, Tuple&& tup) {
+//    std::cout << "call_member_func  传进来的参数" << std::endl;
+//    travel_tuple(tup, [](auto&& item) {
+//        std::cout << item << " ,";
+//    });
+//    std::cout << std::endl;
+    constexpr auto size = std::tuple_size<typename std::decay<Tuple>::type>::value;
+    return invoke_member_impl(self,std::forward<F>(f), std::forward<Tuple>(tup), std::make_index_sequence<size>{});
+}
 /**----------------------通用函数调用器--------------------------*/
 
 #endif //RPCSERVER_META_H
